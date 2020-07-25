@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 
 import argparse
+from time import sleep
+
 from globals import APP_VER
+from input_handler import InputHandler
+from command_invoker import CommandInvoker
+from quit_command import QuitCommand
 
 
 def setup_arguments(description: str):
@@ -20,3 +25,12 @@ if __name__ == "__main__":
     args = setup_arguments("TMPlayer")
     if args.version:
         show_version()
+
+    invoker = CommandInvoker()
+    invoker.register_command(QuitCommand())
+
+    handler = InputHandler(invoker)
+
+    while True:
+        handler.handle()
+        sleep(1)
